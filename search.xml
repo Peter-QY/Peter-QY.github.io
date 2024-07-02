@@ -4,6 +4,38 @@
   
     
     <entry>
+      <title>STM32学习（四）串口通信</title>
+      <link href="/2024/07/02/STM32%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1/"/>
+      <url>/2024/07/02/STM32%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B8%B2%E5%8F%A3%E9%80%9A%E4%BF%A1/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>STM32学习（三）外部中断</title>
+      <link href="/2024/05/01/STM32%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89%E5%A4%96%E9%83%A8%E4%B8%AD%E6%96%AD/"/>
+      <url>/2024/05/01/STM32%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89%E5%A4%96%E9%83%A8%E4%B8%AD%E6%96%AD/</url>
+      
+        <content type="html"><![CDATA[<h2 id="一些前置知识">一些前置知识</h2><h3 id="内部原理简介">内部原理简介</h3><p>首先信号进入输入驱动器，详情见上一篇文章。</p><img src="https://cdn.jsdelivr.net/gh/Peter-QY/photoResourse/images/202407021429964.png" alt="输入驱动器" style="zoom:80%;"><p>信号进入后顺序如下：</p><img src="https://cdn.jsdelivr.net/gh/Peter-QY/photoResourse/images/202407021434581.png" alt="边路检测电路" style="zoom: 67%;"><p><strong>边路检测电路</strong>：信号进来首先经过上升下降选择寄存器，由CubeMx进行配置。第一个即为寄存器的配置。第二个为输入信号上拉下拉的配置。</p><img src="https://cdn.jsdelivr.net/gh/Peter-QY/photoResourse/images/202407021436957.png" alt="上拉下拉处理中断" style="zoom: 33%;"><p>接着，经过一个或门。</p><p><strong>软件中断寄存器</strong>：模拟产生中断，用处可暂时忽略。</p><p><strong>事件屏蔽寄存器</strong>：非相关知识，之后了解。</p><p>输入后，</p><p><strong>请求挂起寄存器</strong>：相应位置变为’1’,即输入高电平信号。</p><p><strong>中断屏蔽寄存器</strong>：CubeMx已配置好。</p><p>经过与门，进入NVIC。</p><p>NVIC主要掌管中断向量表。主要由抢占优先级和响应优先级。主要规则如下：</p><img src="https://cdn.jsdelivr.net/gh/Peter-QY/photoResourse/images/202407021434903.png" style="zoom: 33%;"><p>因此，如要在中断处理函数中使用HAL_DELAY，需要线配置“时钟滴答”的优先级，才可打断中断，实现延时。</p><img src="https://cdn.jsdelivr.net/gh/Peter-QY/photoResourse/images/202407021433027.png" alt="设置优先级" style="zoom: 67%;"><h2 id="代码实践">代码实践</h2><h3 id="外部中断实现摁键控制亮灭">外部中断实现摁键控制亮灭</h3><p>在stm32f103xx_it.c中进行改写，如下图所示：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">void EXTI9_5_IRQHandler(void)</span><br><span class="line">&#123;</span><br><span class="line">  /* USER CODE BEGIN EXTI9_5_IRQn 0 */</span><br><span class="line">  </span><br><span class="line">HAL_Delay(10);</span><br><span class="line">if(HAL_GPIO_ReadPin(KEY_GPIO_Port ,KEY_Pin)==GPIO_PIN_RESET)&#123;</span><br><span class="line">HAL_GPIO_TogglePin(LED_GPIO_Port,LED_Pin);</span><br><span class="line">&#125;//实现摁键摁下，小灯翻转亮灭</span><br><span class="line"></span><br><span class="line">  /* USER CODE END EXTI9_5_IRQn 0 */</span><br><span class="line">  HAL_GPIO_EXTI_IRQHandler(KEY_Pin);</span><br><span class="line">  /* USER CODE BEGIN EXTI9_5_IRQn 1 */</span><br><span class="line"></span><br><span class="line">  /* USER CODE END EXTI9_5_IRQn 1 */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="一些参考资源">一些参考资源</h2><p>1.【keysking的STM32教程】 第7集 深入讲解STM32中断_哔哩哔哩_bilibili</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> stm32 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>STM32学习（二）GPIO</title>
       <link href="/2024/04/06/STM32%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89GPIO/"/>
       <url>/2024/04/06/STM32%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89GPIO/</url>
