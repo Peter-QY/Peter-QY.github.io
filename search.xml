@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>STM32学习（六）时钟源与时钟树</title>
+      <link href="/2024/07/10/STM32%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89%E6%97%B6%E9%92%9F%E6%BA%90%E4%B8%8E%E6%97%B6%E9%92%9F%E6%A0%91/"/>
+      <url>/2024/07/10/STM32%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89%E6%97%B6%E9%92%9F%E6%BA%90%E4%B8%8E%E6%97%B6%E9%92%9F%E6%A0%91/</url>
+      
+        <content type="html"><![CDATA[<h1>相关名词的简要介绍</h1><p>时钟源与时钟树的主体部分如下图所示：</p><p>内部时钟：由单片机内部决定；</p><p>外部时钟：由晶振决定；</p><p>PLL锁相环：提供一个倍频器的作用（作用之一）；</p><p>SYSCLK：系统时钟；</p><p>HCLK：AHB（先进高性能总线）的时钟线；</p><p>内存、内核、DMA：频率和HCLK保持一致；</p><p>APB1：USART2-5、SPI2-3、IIC、USB、CAN、通用定时器、基本定时器</p><p>APB2：USART1、SPI1、GPIO、ADC、高级定时器</p><p><img src="https://cdn.jsdelivr.net/gh/Peter-QY/photoResourse/images/202407102057211.png" alt="部分图"></p><p>FCLK：为中断采样提供信号，低功耗模式唤醒，在HCLK停止的情况下运行；</p><p>TO FLITFDCLK：flash编程接口的时钟，信号来源HSI；</p><p>TO USB：USB提供功能，来自PPL锁相环；</p><p>CSS：时钟安全系统，在HSE与PLCLK的情况下产生紧急制动，切换为HSI，保障时钟的稳定；</p><p>RTC和IWDG：实时时钟与看门狗，由LSI、LSE、和HSE的128分频输入；</p><p>MCO： cubemx中勾选相应的时钟输出功能，可以将时钟输出（不常用）。</p><p>总图如下：</p><p><img src="https://cdn.jsdelivr.net/gh/Peter-QY/photoResourse/images/202407102057367.png" alt="时钟源与时钟线总图"></p><h1>一些主要参考资料</h1><p>1.<a href="https://www.bilibili.com/video/BV1ph4y1e7Ey/?p=17&amp;spm_id_from=pageDriver">【STM32】超清晰STM32时钟树动画讲解_哔哩哔哩_bilibili</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> stm32 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>STM32学习（五）IIC</title>
       <link href="/2024/07/06/STM32%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89IIC/"/>
       <url>/2024/07/06/STM32%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89IIC/</url>
